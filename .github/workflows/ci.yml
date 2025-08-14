@@ -38,7 +38,6 @@ jobs:
         run: |
           cd green-proxy
           bal build
-          bal pack --target-dir target
           docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:${{ github.sha }} .
           docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:${{ github.sha }}
           docker tag ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:latest
@@ -48,7 +47,6 @@ jobs:
         run: |
           cd eu_central_1_service
           bal build
-          bal pack --target-dir target
           docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }} .
           docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }}
           docker tag ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:latest
