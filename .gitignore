@@ -29,3 +29,5 @@ eu-central-1_service/logs/*
 eu-central-1_service/logs/*.log
 eu-central-1_service/logs/*.log.*
 eu-central-1_service/logs/*.log.*.*
+
+visualization_service/KAFKA_CONSUMER_TESTS.md

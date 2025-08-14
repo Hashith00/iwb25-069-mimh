@@ -131,10 +131,6 @@ service class WebSocketService {
         check websocket_service:handleClientConnection(caller);
     }
 
-    remote function onMessage(websocket:Caller caller, anydata data) returns error? {
-        check websocket_service:handleClientMessage(caller, data);
-    }
-
     remote function onClose(websocket:Caller caller, int statusCode, string reason) returns error? {
         check websocket_service:handleClientDisconnection(caller, statusCode, reason);
     }

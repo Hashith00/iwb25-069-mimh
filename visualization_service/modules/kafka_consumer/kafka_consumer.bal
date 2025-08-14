@@ -6,10 +6,10 @@ import ballerinax/kafka;
 import visualization_service.types;
 
 // Configurable Kafka settings
-configurable string bootstrapServers = ?;
-configurable string routingTopic = ?;
-configurable string carbonTopic = ?;
-configurable string healthTopic = ?;
+configurable string bootstrapServers = "localhost:9092";
+configurable string routingTopic = "routing-events";
+configurable string carbonTopic = "carbon-events";
+configurable string healthTopic = "health-events";
 
 // Event handlers - these will be set by the main service
 public type EventHandler function(types:WebSocketMessage message);
@@ -30,7 +30,7 @@ public function setEventHandlers(
 }
 
 // Helper function to process Kafka records
-function processKafkaRecord(kafka:AnydataConsumerRecord kafkaRecord, string eventType, EventHandler? handler) returns error? {
+public function processKafkaRecord(kafka:AnydataConsumerRecord kafkaRecord, string eventType, EventHandler? handler) returns error? {
     anydata valueData = kafkaRecord?.value;
     if valueData is byte[] {
         string valueStr = check string:fromBytes(valueData);

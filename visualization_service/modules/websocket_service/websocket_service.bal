@@ -28,7 +28,6 @@ public function broadcastMessage(types:WebSocketMessage message) {
         }
     }
     
-    // Update stats
     updateStats(message);
 }
 
@@ -122,16 +121,6 @@ public function handleClientConnection(websocket:Caller caller) returns error? {
     };
     
     check caller->writeMessage(webSocketMessageToJson(welcomeMsg));
-}
-
-// Handle client message
-public function handleClientMessage(websocket:Caller caller, anydata data) returns error? {
-    // Handle client messages (e.g., filter requests)
-    string dataStr = data.toString();
-    json|error messageJson = dataStr.fromJsonString();
-    if messageJson is json && messageJson.messageType == "filter" {
-        // Handle filter logic here if needed
-    }
 }
 
 // Handle client disconnection
