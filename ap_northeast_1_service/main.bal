@@ -1,16 +1,16 @@
 import ballerina/http;
 
-service /us_west_2 on new http:Listener(3002) {
+service /ap_northeast_1 on new http:Listener(3006) {
     resource function get health() returns json {
         return {
             "status": "UP",
-            "url": "http://localhost:3002"
+            "url": "http://localhost:3006"
         };
     }
 
     resource function get region() returns json|http:InternalServerError {
         do {
-            string[] regions = ["us-west-2", "us-west-3", "us-west-4"];
+            string[] regions = ["ap-northeast-1", "ap-northeast-2", "ap-northeast-3"];
             return {
                 "regions": regions
             };
