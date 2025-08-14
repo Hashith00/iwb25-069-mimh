@@ -19,3 +19,13 @@ sample_carbon_emision_api/logs/*
 sample_carbon_emision_api/logs/*.log
 sample_carbon_emision_api/logs/*.log.*
 sample_carbon_emision_api/logs/*.log.*.*
+
+eu-central-1_service/node_modules
+eu-central-1_service/dist
+eu-central-1_service/build
+eu-central-1_service/coverage
+eu-central-1_service/logs
+eu-central-1_service/logs/*
+eu-central-1_service/logs/*.log
+eu-central-1_service/logs/*.log.*
+eu-central-1_service/logs/*.log.*.*
