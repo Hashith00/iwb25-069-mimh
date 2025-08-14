@@ -30,7 +30,7 @@ service / on new http:Listener(8080) {
             });
             
             http:Response response;
-            string method = req.getMethod();
+            string method = req.method;
             if method == "GET" || method == "DELETE" {
                 if method == "GET" {
                     response = check targetClient->get(targetPath);
