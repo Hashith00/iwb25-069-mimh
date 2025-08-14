@@ -1,5 +1,3 @@
-// types.bal - All record type definitions
-
 public type CarbonIntensityResponse record {
     string zone;
     int|float carbonIntensity;  // Changed to accept both int and float
@@ -26,7 +24,7 @@ public type GeoLocationResponse record {
     string? timezone;
     string? isp;
     string? org;
-    string? 'as;  // 'as' is a reserved keyword, so we use quotes
+    string? 'as;  
 };
 
 public type OptimalRegionResult record {
@@ -35,4 +33,36 @@ public type OptimalRegionResult record {
     string[] optimalRegions;
     string recommendedRegion;
     float? carbonIntensity;
+};
+
+// Event types
+public type RoutingEvent record {
+    string eventId;
+    string timestamp;
+    string clientIP;
+    string detectedCountry;
+    string[] availableRegions;
+    string selectedRegion;
+    string serviceUrl;
+    float? carbonIntensity;
+    string requestPath;
+    string httpMethod;
+    int processingTimeMs;
+};
+
+public type CarbonIntensityEvent record {
+    string eventId;
+    string timestamp;
+    string region;
+    float carbonIntensity;
+    string dataSource;  // Changed from 'source' to 'dataSource'
+    boolean cached;
+};
+
+public type HealthEvent record {
+    string eventId;
+    string timestamp;
+    string component;
+    string status;
+    map<anydata> metadata;
 };

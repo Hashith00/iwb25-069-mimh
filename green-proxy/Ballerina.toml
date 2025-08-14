@@ -12,3 +12,8 @@ cloud = "docker"
 org = "ballerinax"
 name = "redis"
 version = "3.0.0"
+
+[[dependency]]
+org = "ballerinax"
+name = "kafka"
+version = "4.6.0"
