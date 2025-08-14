@@ -8,7 +8,8 @@ on:
 
 env:
   AWS_REGION: eu-north-1
-  ECR_REPOSITORY_PREFIX: 038462759595.dkr.ecr.eu-north-1.amazonaws.com
+  ECR_REPOSITORY_PREFIX: green-proxy
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -36,16 +37,24 @@ jobs:
       - name: Build and push green-proxy service
         run: |
           cd green-proxy
-          bal build --cloud docker
-          docker push ${{ steps.login-ecr.outputs.registry }}/green-proxy:v1.0.0
+          bal build
+          bal pack --target-dir target
+          docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:${{ github.sha }} .
+          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:${{ github.sha }}
+          docker tag ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:latest
 
       - name: Build and push eu-central-1 service
         run: |
           cd eu_central_1_service
-          bal build --cloud docker
-          docker push ${{ steps.login-ecr.outputs.registry }}/eu-central-1-service:v1.0.0
+          bal build
+          bal pack --target-dir target
+          docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }} .
+          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }}
+          docker tag ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:latest
 
       - name: Output image URIs
         run: |
-          echo "Green Proxy Image: ${{ steps.login-ecr.outputs.registry }}/green-proxy:v1.0.0"
-          echo "EU Central 1 Service Image: ${{ steps.login-ecr.outputs.registry }}/eu-central-1-service:v1.0.0"
+          echo "Green Proxy Image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:${{ github.sha }}"
+          echo "EU Central 1 Service Image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }}"

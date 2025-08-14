@@ -29,8 +29,17 @@ service / on new http:Listener(8080) {
                 timeout: 5000 // 5 second timeout
             });
             
-            // Forward the request to the target service
-            http:Response response = check targetClient->forward(targetPath, req);
+            http:Response response;
+            string method = req.getMethod();
+            if method == "GET" || method == "DELETE" {
+                if method == "GET" {
+                    response = check targetClient->get(targetPath);
+                } else {
+                    response = check targetClient->delete(targetPath);
+                }
+            } else {
+                response = check targetClient->forward(targetPath, req);
+            }
             
             // Add region info to response headers
             response.setHeader("X-Green-Proxy-Region", recommendedRegion);
