@@ -6,6 +6,7 @@ import ballerina/log;
 // Import modules
 import green_proxy.types;
 import green_proxy.cache;
+import green_proxy.kafka;
 
 configurable string carbon_api_key = ?;
 
@@ -17,6 +18,13 @@ public function getCarbonIntensity(string zone) returns types:CarbonIntensityRes
     do {
         types:CarbonIntensityResponse|error? cachedData = cache:getCarbonIntensityCache(zone);
         if cachedData is types:CarbonIntensityResponse {
+            // Publish cached carbon intensity event to Kafka
+            do {
+                float carbonValue = carbonIntensityToFloat(cachedData.carbonIntensity);
+                check kafka:publishCarbonIntensityEvent(zone, carbonValue, "cache", true);
+            } on fail var kafkaErr {
+                log:printWarn("Failed to publish cached carbon intensity event to Kafka: " + kafkaErr.message());
+            }
             return cachedData;
         }
     } on fail var cacheError {
@@ -48,6 +56,14 @@ public function getCarbonIntensity(string zone) returns types:CarbonIntensityRes
         check cache:putCarbonIntensityCache(zone, response);
     } on fail var cacheError {
         log:printWarn("Failed to cache carbon intensity data for zone " + zone + ": " + cacheError.message());
+    }
+    
+    // Publish carbon intensity event to Kafka
+    do {
+        float carbonValue = carbonIntensityToFloat(response.carbonIntensity);
+        check kafka:publishCarbonIntensityEvent(zone, carbonValue, "api", false);
+    } on fail var kafkaErr {
+        log:printWarn("Failed to publish carbon intensity event to Kafka: " + kafkaErr.message());
     }
     
     return response;
