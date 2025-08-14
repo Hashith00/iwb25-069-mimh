@@ -32,7 +32,7 @@ jobs:
       - name: Set up Ballerina
         uses: ballerina-platform/setup-ballerina@v1
         with:
-          distribution: "2201.12.7"
+          version: "2201.12.7"
 
       - name: Build and push green-proxy service
         run: |

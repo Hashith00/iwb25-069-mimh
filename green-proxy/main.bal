@@ -29,6 +29,8 @@ service / on new http:Listener(8080) {
                 timeout: 5000 // 5 second timeout
             });
             
+            // Forward the request to the target service
+            // For GET and DELETE requests, we don't need to forward the body
             http:Response response;
             string method = req.method;
             if method == "GET" || method == "DELETE" {
