@@ -7,10 +7,10 @@ import ballerinax/kafka;
 import green_proxy.types;
 
 // Configurable Kafka settings
-configurable string bootstrapServers = "localhost:9092";
-configurable string routingTopic = "green-proxy-routing";
-configurable string carbonTopic = "green-proxy-carbon-intensity";
-configurable string healthTopic = "green-proxy-health";
+configurable string bootstrapServers = ?;
+configurable string routingTopic = ?;
+configurable string carbonTopic =  ?;
+configurable string healthTopic = ?;
 
 // Kafka producer client
 final kafka:Producer kafkaProducer = check new (bootstrapServers, {

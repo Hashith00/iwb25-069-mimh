@@ -1,0 +1,10 @@
+# Main service configuration
+httpPort = 8082
+wsPort = 9090
+
+# Kafka consumer module configuration
+[kafka_websocket_dashboard.kafka_consumer]
+bootstrapServers = "localhost:29092"
+routingTopic = "green-proxy-routing"
+carbonTopic = "green-proxy-carbon-intensity"
+healthTopic = "green-proxy-health"
