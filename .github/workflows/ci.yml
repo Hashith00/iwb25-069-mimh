@@ -8,7 +8,7 @@ on:
 
 env:
   AWS_REGION: eu-north-1
-  ECR_REPOSITORY_PREFIX: green-proxy
+  ECR_REPOSITORY_PREFIX: 038462759595.dkr.ecr.eu-north-1.amazonaws.com
 
 jobs:
   build-and-push:
