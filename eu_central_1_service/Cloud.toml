@@ -1,0 +1,4 @@
+[container.image]
+repository = "038462759595.dkr.ecr.eu-north-1.amazonaws.com"
+name = "eu_central_1_service"
+tag = "v1.0.0"

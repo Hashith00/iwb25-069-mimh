@@ -1,0 +1,4 @@
+[container.image]
+repository = "038462759595.dkr.ecr.eu-north-1.amazonaws.com/green_proxy"
+name = "green-proxy"
+tag = "v1.0.0"
