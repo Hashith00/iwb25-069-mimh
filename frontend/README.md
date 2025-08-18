@@ -1,188 +1,73 @@
-# Green Proxy Dashboard
+# Welcome to your Lovable project
 
-A modern React-based frontend for the Green Proxy carbon-aware load balancing system.
+## Project info
 
-## Features
+**URL**: https://lovable.dev/projects/4b62c77a-15e8-4518-82c1-bf24ee8f6de8
 
-🌍 **Real-time Dashboard** - Monitor carbon intensity and request routing
-🔍 **Region Explorer** - Explore regions and test IP geolocation
-💾 **Cache Manager** - Monitor and manage Redis cache performance  
-📊 **Analytics** - View environmental impact and performance metrics
+## How can I edit this code?
 
-## Quick Start
+There are several ways of editing your application.
 
-### Prerequisites
+**Use Lovable**
 
-- Node.js 18+ and npm
-- Green Proxy backend running on port 8080
-- Redis running (for full functionality)
+Simply visit the [Lovable Project](https://lovable.dev/projects/4b62c77a-15e8-4518-82c1-bf24ee8f6de8) and start prompting.
 
-### Installation
+Changes made via Lovable will be committed automatically to this repo.
 
-```bash
-# Navigate to frontend directory
-cd frontend
+**Use your preferred IDE**
 
-# Install dependencies
-npm install
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-# Start development server
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+Follow these steps:
+
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
+
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
+
+# Step 3: Install the necessary dependencies.
+npm i
+
+# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
-The dashboard will be available at `http://localhost:3001`
+**Edit a file directly in GitHub**
 
-### Production Build
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-```bash
-# Build for production
-npm run build
+**Use GitHub Codespaces**
 
-# Preview production build
-npm run preview
-```
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## Architecture
+## What technologies are used for this project?
 
-### Technology Stack
+This project is built with:
 
-- **React 18** - UI framework
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Styling framework
-- **Recharts** - Data visualization
-- **Lucide React** - Icon library
-- **Axios** - HTTP client
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
 
-### Project Structure
+## How can I deploy this project?
 
-```
-src/
-├── components/
-│   ├── Layout/
-│   │   ├── Navbar.jsx
-│   │   └── Sidebar.jsx
-│   └── UI/
-│       ├── CarbonIntensityBadge.jsx
-│       ├── MetricCard.jsx
-│       └── StatusIndicator.jsx
-├── pages/
-│   ├── Dashboard.jsx
-│   ├── RegionExplorer.jsx
-│   ├── CacheManager.jsx
-│   └── Analytics.jsx
-├── services/
-│   └── api.js
-└── App.jsx
-```
+Simply open [Lovable](https://lovable.dev/projects/4b62c77a-15e8-4518-82c1-bf24ee8f6de8) and click on Share -> Publish.
 
-## API Integration
+## Can I connect a custom domain to my Lovable project?
 
-The frontend connects to the Green Proxy backend via the following endpoints:
+Yes, you can!
 
-- `GET /debug/regions` - Get optimal regions for current request
-- `GET /cache/stats` - Get cache statistics
-- `DELETE /cache` - Clear cache
-- `GET /health` - Health check
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
-### Development vs Production
-
-In development mode, the app uses mock data when the backend is not available. In production, it connects directly to the Green Proxy API.
-
-## Features Overview
-
-### 🏠 Dashboard
-
-- Real-time system status monitoring
-- Current routing information display
-- Available regions overview
-- Cache performance metrics
-
-### 🌍 Region Explorer
-
-- IP address lookup tool
-- All available regions display
-- Carbon intensity comparison
-- Country-to-region mapping
-
-### 💾 Cache Manager
-
-- Redis connection status
-- Cache statistics (geolocation, carbon intensity)
-- Cache management (clear cache)
-- Performance insights
-
-### 📊 Analytics
-
-- Carbon intensity trends over time
-- Request distribution by region
-- Carbon savings tracking
-- Environmental impact metrics
-
-## Environment Variables
-
-Create a `.env` file in the frontend directory:
-
-```env
-VITE_API_BASE_URL=http://localhost:8080
-VITE_REFRESH_INTERVAL=30000
-```
-
-## Styling
-
-The app uses Tailwind CSS with custom environmental themes:
-
-- `eco-green`: Primary green color (#059669)
-- `eco-dark`: Dark green color (#064e3b)
-- `carbon-low`: Low carbon intensity (#22c55e)
-- `carbon-medium`: Medium carbon intensity (#eab308)
-- `carbon-high`: High carbon intensity (#ef4444)
-
-## Development
-
-### Mock Data
-
-For development purposes, the app includes comprehensive mock data that simulates:
-
-- Region information and carbon intensity
-- Cache statistics
-- Health status
-- Analytics data
-
-### Hot Reload
-
-Vite provides instant hot reload during development. Changes to components are reflected immediately in the browser.
-
-### Linting
-
-```bash
-npm run lint
-```
-
-## Deployment
-
-The frontend is designed to be deployed as a static site and can be hosted on:
-
-- Vercel
-- Netlify
-- AWS S3 + CloudFront
-- Any static hosting service
-
-Configure the API base URL for your production environment.
-
-## Browser Support
-
-- Chrome/Edge 88+
-- Firefox 85+
-- Safari 14+
-
-## Contributing
-
-1. Follow the existing code structure
-2. Use TypeScript for new components
-3. Follow Tailwind CSS conventions
-4. Add appropriate error handling
-5. Include loading states for async operations
-
-## License
-
-This project is part of the Green Proxy system for educational and research purposes.
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
