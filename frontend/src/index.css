@@ -2,36 +2,399 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Green Cloud Routing Dashboard Design System
+   Environmental theme with forest greens and earth tones
+   All colors MUST be HSL for consistency */
+
+@layer base {
+  :root {
+    /* Environmental theme colors */
+    --background: 152 25% 98%;
+    --foreground: 156 40% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 156 40% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 156 40% 15%;
+
+    /* Forest green primary */
+    --primary: 156 73% 20%;
+    --primary-foreground: 0 0% 98%;
+
+    /* Earth tone secondary */
+    --secondary: 45 25% 93%;
+    --secondary-foreground: 156 40% 15%;
+
+    --muted: 152 15% 95%;
+    --muted-foreground: 156 20% 45%;
+
+    /* Bright green accent */
+    --accent: 142 86% 28%;
+    --accent-foreground: 0 0% 98%;
+
+    /* Carbon intensity colors */
+    --success: 142 86% 28%;
+    --success-foreground: 0 0% 98%;
+
+    --warning: 43 96% 45%;
+    --warning-foreground: 45 15% 15%;
+
+    --destructive: 0 84% 55%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* Subtle earth borders */
+    --border: 152 20% 88%;
+    --input: 152 20% 88%;
+    --ring: 156 73% 20%;
+
+    --radius: 0.5rem;
+
+    /* Environmental gradients */
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(156 73% 20%),
+      hsl(142 86% 28%)
+    );
+    --gradient-background: linear-gradient(
+      180deg,
+      hsl(152 25% 98%),
+      hsl(152 15% 95%)
+    );
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(156 73% 20%) 0%,
+      hsl(142 86% 28%) 50%,
+      hsl(88 50% 35%) 100%
+    );
+
+    /* Data visualization colors */
+    --carbon-low: 142 86% 28%;
+    --carbon-medium: 43 96% 45%;
+    --carbon-high: 0 84% 55%;
+
+    /* Shadows with green tint */
+    --shadow-green: 0 4px 20px hsl(156 73% 20% / 0.1);
+    --shadow-card: 0 2px 8px hsl(156 20% 50% / 0.08);
+
+    /* Sidebar colors */
+    --sidebar-background: 156 73% 20%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 142 86% 28%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 156 60% 25%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 156 60% 25%;
+    --sidebar-ring: 142 86% 28%;
+  }
+
+  .dark {
+    /* Dark mode with deep forest theme */
+    --background: 156 40% 8%;
+    --foreground: 152 15% 95%;
+
+    --card: 156 30% 12%;
+    --card-foreground: 152 15% 95%;
+
+    --popover: 156 30% 12%;
+    --popover-foreground: 152 15% 95%;
+
+    --primary: 142 86% 28%;
+    --primary-foreground: 156 40% 8%;
+
+    --secondary: 156 20% 15%;
+    --secondary-foreground: 152 15% 95%;
+
+    --muted: 156 20% 15%;
+    --muted-foreground: 152 15% 65%;
+
+    --accent: 88 50% 35%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84% 55%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 156 20% 20%;
+    --input: 156 20% 20%;
+    --ring: 142 86% 28%;
+
+    --sidebar-background: 156 40% 6%;
+    --sidebar-foreground: 152 15% 95%;
+    --sidebar-primary: 142 86% 28%;
+    --sidebar-primary-foreground: 156 40% 8%;
+    --sidebar-accent: 156 30% 12%;
+    --sidebar-accent-foreground: 152 15% 95%;
+    --sidebar-border: 156 20% 20%;
+    --sidebar-ring: 142 86% 28%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background: var(--gradient-background);
+    min-height: 100vh;
+  }
+
+  /* Custom scrollbar with green theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--accent));
+  }
+}
+
 @layer components {
-  .card {
-    @apply bg-white rounded-lg shadow-md p-6 border border-gray-200;
+  /* Hero section styles */
+  .hero-text {
+    @apply bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent;
   }
 
-  .card-dark {
-    @apply bg-gray-800 rounded-lg shadow-md p-6 border border-gray-700;
+  /* Dashboard card styles */
+  .dashboard-card {
+    @apply rounded-lg border bg-card p-6 shadow-sm;
+    box-shadow: var(--shadow-card);
   }
 
-  .btn-primary {
-    @apply bg-eco-green hover:bg-eco-dark text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+  /* Metric display styles */
+  .metric-value {
+    @apply text-2xl font-bold text-foreground;
   }
 
-  .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+  .metric-label {
+    @apply text-sm text-muted-foreground uppercase tracking-wide;
   }
 
+  /* Carbon intensity indicators */
+  .carbon-low {
+    @apply text-success;
+    color: hsl(var(--carbon-low));
+  }
+
+  .carbon-medium {
+    @apply text-warning;
+    color: hsl(var(--carbon-medium));
+  }
+
+  .carbon-high {
+    @apply text-destructive;
+    color: hsl(var(--carbon-high));
+  }
+
+  /* Status indicators */
   .status-indicator {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex h-2 w-2 rounded-full;
   }
 
-  .status-healthy {
-    @apply bg-green-100 text-green-800;
+  .status-online {
+    @apply bg-success;
+    background-color: hsl(var(--carbon-low));
   }
 
   .status-warning {
-    @apply bg-yellow-100 text-yellow-800;
+    @apply bg-warning;
+    background-color: hsl(var(--carbon-medium));
   }
 
-  .status-error {
-    @apply bg-red-100 text-red-800;
+  .status-offline {
+    @apply bg-destructive;
+    background-color: hsl(var(--carbon-high));
+  }
+
+  /* Animations */
+  .pulse-green {
+    animation: pulse-green 2s infinite;
+  }
+
+  @keyframes pulse-green {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.05);
+    }
+  }
+
+  .data-flow {
+    animation: data-flow 3s infinite linear;
+  }
+
+  @keyframes data-flow {
+    0% {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(20px);
+      opacity: 0;
+    }
+  }
+
+  .rotate-slow {
+    animation: rotate-slow 8s infinite linear;
+  }
+
+  @keyframes rotate-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Leaflet Map Custom Styling for Bright Theme */
+  .leaflet-container-bright {
+    background-color: rgb(241 245 249) !important;
+  }
+
+  .leaflet-container-dark {
+    background-color: rgb(15 23 42) !important;
+  }
+
+  .leaflet-control-zoom a {
+    background-color: rgb(255 255 255) !important;
+    color: rgb(31 41 55) !important;
+    border: 1px solid rgb(209 213 219) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .leaflet-control-zoom a:hover {
+    background-color: rgb(249 250 251) !important;
+    color: rgb(17 24 39) !important;
+  }
+
+  .leaflet-control-attribution {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    color: rgb(75 85 99) !important;
+    font-size: 10px !important;
+    border-radius: 0.25rem !important;
+    border: 1px solid rgb(229 231 235) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .leaflet-control-attribution a {
+    color: rgb(34 197 94) !important;
+  }
+
+  /* Custom marker styling */
+  .custom-div-icon {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  /* Server node icon styling */
+  .server-node-icon {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .routing-hub-icon {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  /* Server node hover effects */
+  .server-node-icon:hover,
+  .routing-hub-icon:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  /* Location pin hover effects */
+  .custom-div-icon:hover .location-pin {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  /* City label animations */
+  .city-label {
+    animation: fadeInUp 0.3s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px) translateX(-50%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) translateX(-50%);
+    }
+  }
+
+  /* Leaflet popup styling for bright theme */
+  .leaflet-popup-content-wrapper {
+    background-color: rgb(255 255 255) !important;
+    color: rgb(31 41 55) !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+      0 4px 6px -2px rgb(0 0 0 / 0.05) !important;
+    border: 1px solid rgb(229 231 235) !important;
+  }
+
+  .leaflet-popup-tip {
+    background-color: rgb(255 255 255) !important;
+    border: 1px solid rgb(229 231 235) !important;
+  }
+
+  .leaflet-popup-close-button {
+    color: rgb(107 114 128) !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+  }
+
+  .leaflet-popup-close-button:hover {
+    color: rgb(55 65 81) !important;
+  }
+
+  /* Animate route lines */
+  .leaflet-interactive {
+    transition: all 0.3s ease;
+  }
+
+  .leaflet-interactive:hover {
+    stroke-width: 5 !important;
+    opacity: 1 !important;
   }
 }
