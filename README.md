@@ -1,39 +1,50 @@
-# Green Proxy - Carbon-Aware Load Balancing System
+# Green Proxy - A Carbon-Aware API Proxy
 
-A sophisticated carbon-aware proxy service built with Ballerina that intelligently routes user requests to the most environmentally friendly cloud regions based on real-time carbon intensity data.
+![Alt text](images/Green_proxy_ui.png "Green Proxy Dashbaord")
 
-## 🌍 Overview
+Green-Router is an intelligent, lightweight API proxy designed to reduce the carbon footprint of digital services. Built with the cloud-native programming language Ballerina, this service dynamically routes incoming traffic to the cloud region with the lowest real-time carbon intensity, making your applications greener without sacrificing performance.
 
-Green Proxy helps reduce the carbon footprint of cloud applications by:
+## The Problem: The Carbon Footprint of the Cloud
 
-- **Detecting user location** via IP geolocation
-- **Analyzing carbon intensity** across different cloud regions
-- **Routing requests** to the region with the lowest carbon emissions
-- **Caching data** for performance optimization
+Every API request we serve consumes electricity in a data center. While the cloud is efficient, the energy powering these data centers often comes from a mix of renewable and fossil fuel sources. This energy mix changes constantly based on weather (windy or sunny) and grid demand.
 
-## 🏗️ Architecture
+A service running in Virginia might be powered by a high-carbon grid in the morning but a cleaner one at night. Meanwhile, a server in Ireland might be running on clean wind power. By being "carbon-aware," we can actively choose to run our workloads where the energy is greenest at any given moment.
 
-```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Frontend      │    │   Green Proxy    │    │ Regional        │
-│   Dashboard     │───▶│   (Port 8080)    │───▶│ Services        │
-│   (Port 3001)   │    │                  │    │ (Port 3004+)    │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-                              │
-                              ▼
-                    ┌──────────────────┐
-                    │     Redis        │
-                    │   (Port 6379)    │
-                    └──────────────────┘
-                              │
-                              ▼
-                    ┌──────────────────┐
-                    │  Carbon API      │
-                    │  (Port 3000)     │
-                    └──────────────────┘
-```
+## How It Minimizes Carbon Emissions
 
-## 🚀 Quick Start
+This project implements a strategy known as "carbon-aware load shifting." Instead of routing traffic based only on technical factors like latency, we add a new, intelligent to the routing mechanism called real-time carbon intensity.
+
+The Green-Router proxy sits in front of your main application and acts as a smart entry point. Its core logic is simple but powerful:
+
+- **1. Identify the User's Location** It determines the user's geographic location to understand the initial network path.
+- **2. Fetch Real-time Grid Data** It calls an external Carbon Intensity API to get the current carbon emissions (gCO₂/kWh) for the power grids in each of your available AWS regions.
+- **3. Make the Greenest Choice** It compares the carbon intensity of all regions and identifies which one is currently running on the cleanest energy.
+- **4. Route the Request** It forwards the user's request to the application backend in that eco-friendly region.
+
+## Architecture
+
+The system is designed as a highly available, scalable, multi-region architecture on AWS.
+
+![Alt text](images/WSO2_Green_Proxy_Architecture_Diagram.drawio.png "Green Proxy Architecture Diagram")
+
+- **1. Global DNS (Amazon Route 53)** A single global endpoint (api.wso2.com) uses latency-based routing to direct the user to the nearest AWS region for the best performance.
+- **2. Regional Green Proxy (Ballerina on ECS)** In each region, our custom proxy runs on a scalable AWS Elastic Container Service. It receives the traffic from Route 53.
+- **3. WSO2 API Gatewaye** The proxy forwards the request to the main WSO2 API Gateway, which handles core concerns like authentication, security, and rate-limiting.
+- **4. Backend Service** The final application that processes the request.
+
+## Request Flow
+
+This is how api request handled by the Green Proxy
+
+![Alt text](images/Request_flow_chart.png "Green Proxy request flow")
+
+## Proxy Core Logic
+
+The proxy's internal logic is designed for high performance by using a multi-level caching strategy.
+
+![Alt text](images/green_proxy_logic_flow.png "Green Proxy logic")
+
+## Quick Start
 
 ### Prerequisites
 
@@ -45,7 +56,7 @@ Green Proxy helps reduce the carbon footprint of cloud applications by:
 
 ```bash
 # Start Redis cache
-docker-compose up -d redis
+docker-compose up -d
 ```
 
 ### 2. Start Carbon Emission API
@@ -79,34 +90,34 @@ bal run
 cd frontend
 npm install
 npm run dev
-# Dashboard available at http://localhost:3001
+# Dashboard available at http://localhost:4001
 ```
 
-## 📊 Frontend Dashboard
+## Frontend Dashboard
 
 The React-based dashboard provides:
 
-### 🏠 **Dashboard**
+### **Dashboard**
 
 - Real-time system status monitoring
 - Current routing information
 - Available regions overview
 - Cache performance metrics
 
-### 🌍 **Region Explorer**
+### **Region Explorer**
 
 - IP address lookup tool
 - All available regions display
 - Carbon intensity comparison
 - Country-to-region mapping
 
-### 💾 **Cache Manager**
+### **Cache Manager**
 
 - Redis connection status
 - Cache statistics and management
 - Performance insights
 
-### 📈 **Analytics**
+### **Analytics**
 
 - Carbon intensity trends
 - Request distribution by region
@@ -154,51 +165,3 @@ Ballerina-Project/
 ├── sample_carbon_emission_api/ # Carbon Data API
 └── docker-compose.yml        # Infrastructure
 ```
-
-## 📈 API Endpoints
-
-### Green Proxy Service (Port 8080)
-
-- `GET /{...path}` - Proxy requests to optimal region
-- `GET /debug/regions` - Get region selection debug info
-- `GET /cache/stats` - View cache statistics
-- `DELETE /cache` - Clear cache
-- `GET /health` - Health check
-
-### Frontend Dashboard (Port 3001)
-
-- `/` - Main dashboard
-- `/regions` - Region explorer
-- `/cache` - Cache manager
-- `/analytics` - Analytics and insights
-
-## 🌱 Environmental Impact
-
-This system helps achieve:
-
-- **~90% reduction** in external API calls through caching
-- **Up to 15% reduction** in carbon footprint vs random routing
-- **Real-time optimization** based on grid carbon intensity
-- **Transparency** through detailed carbon impact reporting
-
-## 🧪 Development
-
-### Running Tests
-
-```bash
-# Ballerina tests
-cd green-proxy
-bal test
-
-# Frontend tests
-cd frontend
-npm test
-```
-
-### Mock Data
-
-The frontend includes comprehensive mock data for development when the backend is not available.
-
-## 📄 License
-
-This project is for educational and research purposes as part of a university academic project.
