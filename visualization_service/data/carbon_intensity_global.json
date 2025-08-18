@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "city": "Los Angeles",
+    "country": "USA",
+    "longitude": -118.2437,
+    "latitude": 34.0522,
+    "intensity": 125,
+    "color": "#eab308",
+    "requests": 3420,
+    "latency": 35
+  },
+  {
+    "id": 2,
+    "city": "New York",
+    "country": "USA",
+    "longitude": -74.006,
+    "latitude": 40.7128,
+    "intensity": 98,
+    "color": "#22c55e",
+    "requests": 5280,
+    "latency": 28
+  },
+  {
+    "id": 3,
+    "city": "London",
+    "country": "UK",
+    "longitude": -0.1278,
+    "latitude": 51.5074,
+    "intensity": 156,
+    "color": "#eab308",
+    "requests": 2890,
+    "latency": 42
+  },
+  {
+    "id": 4,
+    "city": "Frankfurt",
+    "country": "Germany",
+    "longitude": 8.6821,
+    "latitude": 50.1109,
+    "intensity": 178,
+    "color": "#eab308",
+    "requests": 2145,
+    "latency": 38
+  },
+  {
+    "id": 5,
+    "city": "Tokyo",
+    "country": "Japan",
+    "longitude": 139.6503,
+    "latitude": 35.6762,
+    "intensity": 245,
+    "color": "#ef4444",
+    "requests": 4125,
+    "latency": 52
+  },
+  {
+    "id": 6,
+    "city": "Singapore",
+    "country": "Singapore",
+    "longitude": 103.8198,
+    "latitude": 1.3521,
+    "intensity": 189,
+    "color": "#eab308",
+    "requests": 3680,
+    "latency": 45
+  },
+  {
+    "id": 7,
+    "city": "Sydney",
+    "country": "Australia",
+    "longitude": 151.2093,
+    "latitude": -33.8688,
+    "intensity": 630,
+    "color": "#ef4444",
+    "requests": 1456,
+    "latency": 58
+  },
+  {
+    "id": 8,
+    "city": "Toronto",
+    "country": "Canada",
+    "longitude": -79.3832,
+    "latitude": 43.6532,
+    "intensity": 67,
+    "color": "#22c55e",
+    "requests": 2234,
+    "latency": 33
+  },
+  {
+    "id": 9,
+    "city": "Stockholm",
+    "country": "Sweden",
+    "longitude": 18.0686,
+    "latitude": 59.3293,
+    "intensity": 45,
+    "color": "#22c55e",
+    "requests": 1890,
+    "latency": 41
+  },
+  {
+    "id": 10,
+    "city": "São Paulo",
+    "country": "Brazil",
+    "longitude": -46.6333,
+    "latitude": -23.5505,
+    "intensity": 82,
+    "color": "#22c55e",
+    "requests": 1834,
+    "latency": 78
+  },
+  {
+    "id": 11,
+    "city": "Mumbai",
+    "country": "India",
+    "longitude": 72.8777,
+    "latitude": 19.076,
+    "intensity": 820,
+    "color": "#ef4444",
+    "requests": 2845,
+    "latency": 72
+  },
+  {
+    "id": 12,
+    "city": "Cape Town",
+    "country": "South Africa",
+    "longitude": 18.4241,
+    "latitude": -33.9249,
+    "intensity": 928,
+    "color": "#ef4444",
+    "requests": 967,
+    "latency": 95
+  }
+]

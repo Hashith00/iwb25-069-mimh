@@ -1,0 +1,22 @@
+{
+  "hitRate": 94.2,
+  "missRate": 5.8,
+  "cacheSize": "2.4 GB",
+  "ttlAverage": "5m 32s",
+  "geolocation": {
+    "size": 1024,
+    "ttl": 3600
+  },
+  "carbonIntensity": {
+    "size": 256,
+    "ttl": 1800
+  },
+  "total": {
+    "size": 1280
+  },
+  "redis": {
+    "host": "localhost",
+    "port": 6379,
+    "healthy": true
+  }
+}

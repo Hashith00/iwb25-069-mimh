@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Activity,
   Globe,
-  Zap,
   BarChart3,
   MapPin,
-  Wifi,
   TrendingDown,
-  TrendingUp,
   Clock,
   Database,
 } from "lucide-react";
@@ -21,10 +18,16 @@ import {
   Marker,
   Popup,
   Polyline,
-  useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import {
+  api,
+  CarbonIntensityLocation,
+  DashboardMetrics,
+  Region,
+  SystemStatus,
+} from "@/services/api";
 
 // Fix for Leaflet default markers
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -41,216 +44,56 @@ const Dashboard = () => {
   // Map center state for OpenStreetMap
   const [mapCenter, setMapCenter] = useState({ lat: 20, lng: 0 });
   const [mapZoom, setMapZoom] = useState(2);
+  const [carbonMetrics, setCarbonMetrics] = useState<DashboardMetrics | null>(
+    null
+  );
+  const [regions, setRegions] = useState<Region[] | null>(null);
+  const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null);
+  const [carbonDataPoints, setCarbonDataPoints] = useState<
+    CarbonIntensityLocation[] | null
+  >(null);
 
-  // Mock data - would come from API in real implementation
-  const carbonMetrics = {
-    currentSavings: 47,
-    totalRequestsToday: 14523,
-    averageLatency: 42,
-    activRegions: 12,
+  const fetchCarbonDataPoints = async () => {
+    try {
+      const carbonDataPoints = await api.getCarbonIntensityGlobal();
+      setCarbonDataPoints(carbonDataPoints);
+    } catch (error) {
+      console.error("Error fetching carbon data points:", error);
+    }
   };
+  useEffect(() => {
+    const fetchCarbonMetrics = async () => {
+      try {
+        const metrics = await api.getMetrics();
+        setCarbonMetrics(metrics);
+      } catch (error) {
+        console.error("Error fetching carbon metrics:", error);
+      }
+    };
+    const fetchRegions = async () => {
+      try {
+        const regions = await api.getRegions();
+        setRegions(regions);
+      } catch (error) {
+        console.error("Error fetching regions:", error);
+      }
+    };
+    const fetchSystemStatus = async () => {
+      try {
+        const systemStatus = await api.getSystemStatus();
+        setSystemStatus(systemStatus);
+      } catch (error) {
+        console.error("Error fetching system status:", error);
+      }
+    };
+    fetchCarbonMetrics();
+    fetchRegions();
+    fetchSystemStatus();
+  }, []);
 
-  const regions = [
-    {
-      name: "US West",
-      intensity: 120,
-      status: "online",
-      requests: 3420,
-      latency: 35,
-    },
-    {
-      name: "EU Central",
-      intensity: 89,
-      status: "online",
-      requests: 2890,
-      latency: 48,
-    },
-    {
-      name: "Asia Pacific",
-      intensity: 156,
-      status: "online",
-      requests: 4125,
-      latency: 52,
-    },
-    {
-      name: "US East",
-      intensity: 98,
-      status: "online",
-      requests: 2456,
-      latency: 38,
-    },
-    {
-      name: "EU North",
-      intensity: 45,
-      status: "online",
-      requests: 1632,
-      latency: 44,
-    },
-  ];
-
-  // Real geographic locations with carbon intensity data
-  const carbonDataPoints = [
-    {
-      id: 1,
-      city: "Los Angeles",
-      country: "USA",
-      longitude: -118.2437,
-      latitude: 34.0522,
-      intensity: 25,
-      color: "#22c55e", // green
-      requests: 3420,
-      latency: 35,
-    },
-    {
-      id: 2,
-      city: "New York",
-      country: "USA",
-      longitude: -74.006,
-      latitude: 40.7128,
-      intensity: 295,
-      color: "#eab308", // yellow
-      requests: 2456,
-      latency: 38,
-    },
-    {
-      id: 3,
-      city: "Houston",
-      country: "USA",
-      longitude: -95.3698,
-      latitude: 29.7604,
-      intensity: 387,
-      color: "#eab308", // yellow
-      requests: 1856,
-      latency: 42,
-    },
-    {
-      id: 4,
-      city: "London",
-      country: "UK",
-      longitude: -0.1278,
-      latitude: 51.5074,
-      intensity: 233,
-      color: "#22c55e", // green
-      requests: 2890,
-      latency: 48,
-    },
-    {
-      id: 5,
-      city: "Berlin",
-      country: "Germany",
-      longitude: 13.405,
-      latitude: 52.52,
-      intensity: 420,
-      color: "#eab308", // yellow
-      requests: 1834,
-      latency: 44,
-    },
-    {
-      id: 6,
-      city: "Oslo",
-      country: "Norway",
-      longitude: 10.7522,
-      latitude: 59.9139,
-      intensity: 18,
-      color: "#22c55e", // green
-      requests: 1632,
-      latency: 44,
-    },
-    {
-      id: 7,
-      city: "Moscow",
-      country: "Russia",
-      longitude: 37.6173,
-      latitude: 55.7558,
-      intensity: 456,
-      color: "#ef4444", // red
-      requests: 2123,
-      latency: 65,
-    },
-    {
-      id: 8,
-      city: "Beijing",
-      country: "China",
-      longitude: 116.4074,
-      latitude: 39.9042,
-      intensity: 555,
-      color: "#ef4444", // red
-      requests: 4125,
-      latency: 52,
-    },
-    {
-      id: 9,
-      city: "Tokyo",
-      country: "Japan",
-      longitude: 139.6503,
-      latitude: 35.6762,
-      intensity: 469,
-      color: "#eab308", // yellow
-      requests: 3567,
-      latency: 48,
-    },
-    {
-      id: 10,
-      city: "Mumbai",
-      country: "India",
-      longitude: 72.8777,
-      latitude: 19.076,
-      intensity: 708,
-      color: "#ef4444", // red
-      requests: 2845,
-      latency: 72,
-    },
-    {
-      id: 11,
-      city: "Jakarta",
-      country: "Indonesia",
-      longitude: 106.8456,
-      latitude: -6.2088,
-      intensity: 345,
-      color: "#eab308", // yellow
-      requests: 1967,
-      latency: 68,
-    },
-    {
-      id: 12,
-      city: "Sydney",
-      country: "Australia",
-      longitude: 151.2093,
-      latitude: -33.8688,
-      intensity: 630,
-      color: "#eab308", // yellow
-      requests: 1456,
-      latency: 58,
-    },
-    {
-      id: 13,
-      city: "São Paulo",
-      country: "Brazil",
-      longitude: -46.6396,
-      latitude: -23.5558,
-      intensity: 82,
-      color: "#22c55e", // green
-      requests: 1834,
-      latency: 78,
-    },
-    {
-      id: 14,
-      city: "Cape Town",
-      country: "South Africa",
-      longitude: 18.4241,
-      latitude: -33.9249,
-      intensity: 928,
-      color: "#ef4444", // red
-      requests: 967,
-      latency: 95,
-    },
-  ];
-
-  const getCarbonIntensityColor = (intensity: number) => {
-    if (intensity < 100) return "carbon-low";
-    if (intensity < 150) return "carbon-medium";
-    return "carbon-high";
-  };
+  useEffect(() => {
+    fetchCarbonDataPoints();
+  }, []);
 
   const getCarbonIntensityBadge = (intensity: number) => {
     if (intensity < 100) return "success";
@@ -277,6 +120,9 @@ const Dashboard = () => {
               <Link to="/admin">
                 <Button variant="ghost">Admin</Button>
               </Link>
+              <Link to="/events">
+                <Button variant="ghost">Events</Button>
+              </Link>
               <div className="flex items-center space-x-2">
                 <div className="status-indicator status-online"></div>
                 <span className="text-sm text-muted-foreground">
@@ -296,7 +142,7 @@ const Dashboard = () => {
               <div>
                 <div className="metric-label">Carbon Savings</div>
                 <div className="metric-value text-success">
-                  {carbonMetrics.currentSavings}%
+                  {carbonMetrics?.currentSavings ?? 0}%
                 </div>
               </div>
               <TrendingDown className="h-8 w-8 text-success" />
@@ -308,7 +154,7 @@ const Dashboard = () => {
               <div>
                 <div className="metric-label">Requests Today</div>
                 <div className="metric-value">
-                  {carbonMetrics.totalRequestsToday.toLocaleString()}
+                  {carbonMetrics?.totalRequestsToday?.toLocaleString() ?? "0"}
                 </div>
               </div>
               <BarChart3 className="h-8 w-8 text-primary" />
@@ -320,7 +166,7 @@ const Dashboard = () => {
               <div>
                 <div className="metric-label">Avg Latency</div>
                 <div className="metric-value">
-                  {carbonMetrics.averageLatency}ms
+                  {carbonMetrics?.averageLatency ?? 0}ms
                 </div>
               </div>
               <Clock className="h-8 w-8 text-accent" />
@@ -331,7 +177,9 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <div className="metric-label">Active Regions</div>
-                <div className="metric-value">{carbonMetrics.activRegions}</div>
+                <div className="metric-value">
+                  {carbonMetrics?.activeRegions ?? 0}
+                </div>
               </div>
               <MapPin className="h-8 w-8 text-warning" />
             </div>
@@ -446,7 +294,7 @@ const Dashboard = () => {
                 />
 
                 {/* Carbon Intensity Data Markers */}
-                {carbonDataPoints.map((point) => (
+                {carbonDataPoints?.map((point) => (
                   <Marker
                     key={point.id}
                     position={[point.latitude, point.longitude]}
@@ -642,7 +490,7 @@ const Dashboard = () => {
           <Card className="dashboard-card">
             <h3 className="text-lg font-semibold mb-4">Regional Status</h3>
             <div className="space-y-4">
-              {regions.map((region) => (
+              {regions?.map((region) => (
                 <div
                   key={region.name}
                   className="flex items-center justify-between p-3 rounded-lg bg-muted/30"
@@ -658,15 +506,17 @@ const Dashboard = () => {
                     <div>
                       <div className="font-medium">{region.name}</div>
                       <div className="text-sm text-muted-foreground">
-                        {region.requests.toLocaleString()} req •{" "}
+                        {region.requests24h.toLocaleString()} req •{" "}
                         {region.latency}ms
                       </div>
                     </div>
                   </div>
                   <Badge
-                    variant={getCarbonIntensityBadge(region.intensity) as any}
+                    variant={
+                      getCarbonIntensityBadge(region.carbonIntensity) as any
+                    }
                   >
-                    {region.intensity}g CO₂
+                    {region.carbonIntensity}g CO₂
                   </Badge>
                 </div>
               ))}

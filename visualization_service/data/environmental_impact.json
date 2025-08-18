@@ -1,0 +1,15 @@
+{
+  "co2Avoided": "847 kg",
+  "renewableUsage": 12.4,
+  "cleanEnergyConsumed": "3.2 MWh",
+  "avgGridIntensity": 89,
+  "period": "24h",
+  "carbonSavingsPercentage": 47.3,
+  "totalEnergyConsumed": "25.8 MWh",
+  "renewableEnergyConsumed": "3.2 MWh",
+  "fossilEnergyConsumed": "22.6 MWh",
+  "co2EmissionsSaved": 847.2,
+  "co2EmissionsTotal": 2156.8,
+  "co2EmissionsWithoutOptimization": 3004.0,
+  "efficiencyGain": 28.2
+}
