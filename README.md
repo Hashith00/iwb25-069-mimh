@@ -49,81 +49,132 @@ The proxy's internal logic is designed for high performance by using a multi-lev
 ### Prerequisites
 
 - [Ballerina](https://ballerina.io/) 2201.12.7 or later
-- [Docker](https://www.docker.com/) and Docker Compose
+- [Docker](https://www.docker.com/) 20.10+ and Docker Compose 2.0+
 - [Node.js](https://nodejs.org/) 18+ (for frontend)
+- [Git](https://git-scm.com/) for cloning the repository
 
-### 1. Start Infrastructure Services
+### 🔧 Installation Steps
+
+#### 1. Clone and Setup Project
 
 ```bash
-# Start Redis cache
-docker-compose up -d
+# Clone the repository
+git clone <repository-url>
+cd green-proxy
+
+# Verify Ballerina installation
+bal version
+
+# Verify Docker installation
+docker --version
+docker-compose --version
+
+# Verify Node.js installation
+node --version
+npm --version
 ```
 
-### 2. Start Carbon Emission API
+#### 2. Start Infrastructure Services
+
+```bash
+# Start Redis cache and other infrastructure services
+docker-compose up -d
+
+# Verify Redis is running
+docker ps | grep redis
+# Expected output: redis container should be running on port 6379
+
+# Check Redis connectivity
+docker exec -it green-proxy-redis-1 redis-cli ping
+# Expected output: PONG
+```
+
+#### 3. Start Carbon Emission API
 
 ```bash
 cd sample_carbon_emission_api
+
+# Install dependencies
 npm install
+
+# Start the service
 npm start
+
+# Verify API is running
+curl http://localhost:3000/health
+# Expected output: {"status": "healthy"}
+
 # API available at http://localhost:3000
 ```
 
-### 3. Start Green Proxy Service
+#### 4. Start Green Proxy Service
 
 ```bash
-cd green-proxy
+cd ../green-proxy
+
+# Install Ballerina dependencies
+bal build
+
+# Start the service
 bal run
+
+# Verify service is running
+curl http://localhost:8080/health
+# Expected output: Service health status
+
 # Service available at http://localhost:8080
 ```
 
-### 4. Start Regional Services
+#### 5. Start Regional Services
 
 ```bash
-cd eu_central_1_service
+# Start European region service
+cd ../eu_central_1_service
 bal run
 # Service available at http://localhost:3004
+
+# In a new terminal, start US East service
+cd ../us_east_1_service
+bal run
+# Service available at http://localhost:3001
+
+# In another terminal, start US West service
+cd ../us_west_2_service
+bal run
+# Service available at http://localhost:3002
 ```
 
-### 5. Start Frontend Dashboard
+#### 6. Start Visualization Service
 
 ```bash
-cd frontend
+cd ../visualization_service
+
+# Build and run the service
+bal build
+bal run
+
+# Verify service is running
+curl http://localhost:3005/health
+# Service available at http://localhost:3005
+```
+
+#### 7. Start Frontend Dashboard
+
+```bash
+cd ../frontend
+
+# Install dependencies
 npm install
+
+# Start development server
 npm run dev
+
+# Verify frontend is running
+curl http://localhost:4001
 # Dashboard available at http://localhost:4001
 ```
 
-## Frontend Dashboard
-
-The React-based dashboard provides:
-
-### **Dashboard**
-
-- Real-time system status monitoring
-- Current routing information
-- Available regions overview
-- Cache performance metrics
-
-### **Region Explorer**
-
-- IP address lookup tool
-- All available regions display
-- Carbon intensity comparison
-- Country-to-region mapping
-
-### **Cache Manager**
-
-- Redis connection status
-- Cache statistics and management
-- Performance insights
-
-### **Analytics**
-
-- Carbon intensity trends
-- Request distribution by region
-- Environmental impact metrics
-
-## 🔧 Configuration
+## Configuration
 
 ### Green Proxy Configuration (`green-proxy/Config.toml`)
 
@@ -147,21 +198,94 @@ VITE_REFRESH_INTERVAL=30000
 ## 🛠️ Project Structure
 
 ```
-Ballerina-Project/
-├── frontend/                  # React Dashboard
+green-proxy/
+├── 📁 frontend/                          # React Dashboard Application
 │   ├── src/
-│   │   ├── components/       # UI Components
-│   │   ├── pages/           # Page Components
-│   │   └── services/        # API Services
-│   └── package.json
-├── green-proxy/              # Main Proxy Service
+│   │   ├── components/                   # Reusable UI Components
+│   │   │   ├── ui/                      # Shadcn/ui Components
+│   │   │   ├── HeaderComponent.tsx      # Main Header
+│   │   │   ├── LoginModal.tsx           # Authentication Modal
+│   │   │   └── ProtectedRoute.tsx       # Route Protection
+│   │   ├── pages/                       # Application Pages
+│   │   │   ├── Dashboard.tsx            # Main Dashboard
+│   │   │   ├── Events.tsx               # Event Monitoring
+│   │   │   ├── Regions.tsx              # Regional Status
+│   │   │   └── Landing.tsx              # Landing Page
+│   │   ├── contexts/                    # React Contexts
+│   │   │   └── AuthContext.tsx          # Authentication State
+│   │   ├── hooks/                       # Custom React Hooks
+│   │   ├── services/                    # API Integration
+│   │   └── lib/                         # Utility Functions
+│   ├── package.json                     # Frontend Dependencies
+│   └── tailwind.config.ts               # Styling Configuration
+│
+├── 📁 green-proxy/                      # Main Green Proxy Service (Ballerina)
 │   ├── modules/
-│   │   ├── cache/           # Redis Caching
-│   │   ├── services/        # Business Logic
-│   │   ├── types/           # Type Definitions
-│   │   └── utils/           # Utilities
-│   └── main.bal
-├── eu_central_1_service/     # Regional Service Example
-├── sample_carbon_emission_api/ # Carbon Data API
-└── docker-compose.yml        # Infrastructure
+│   │   ├── cache/                       # Redis Caching Layer
+│   │   │   ├── cache.bal               # Cache Implementation
+│   │   │   └── tests/                  # Cache Unit Tests
+│   │   ├── kafka/                      # Kafka Integration
+│   │   │   ├── kafka.bal               # Kafka Producer/Consumer
+│   │   │   └── tests/                  # Kafka Tests
+│   │   ├── services/                   # Business Logic Services
+│   │   │   ├── carbon.bal              # Carbon Intensity Service
+│   │   │   ├── geolocation.bal         # Location Detection
+│   │   │   └── region_optimizer.bal    # Region Selection Logic
+│   │   ├── types/                      # Type Definitions
+│   │   │   ├── types.bal               # Data Models
+│   │   │   └── tests/                  # Type Tests
+│   │   └── utils/                      # Utility Functions
+│   │       ├── region_mapping.bal      # Region Mapping Logic
+│   │       └── region_to_service_url_mapping.bal
+│   ├── main.bal                        # Service Entry Point
+│   ├── Ballerina.toml                  # Ballerina Configuration
+│   ├── Config.toml                     # Environment Configuration
+│   └── Dockerfile                      # Container Configuration
+│
+├── 📁 regional-services/                # Regional Service Instances
+│   ├── us_east_1_service/              # US East (N. Virginia)
+│   │   ├── main.bal                    # Regional Service Logic
+│   │   ├── Ballerina.toml              # Service Configuration
+│   │   └── Dockerfile                  # Container Setup
+│   ├── us_west_2_service/              # US West (Oregon)
+│   ├── eu_central_1_service/           # Europe (Frankfurt)
+│   ├── ap_northeast_1_service/         # Asia Pacific (Tokyo)
+│   └── ap_southeast_1_service/         # Asia Pacific (Singapore)
+│
+├── 📁 visualization_service/            # Real-time Dashboard Backend
+│   ├── modules/
+│   │   ├── dashboard_api/              # Dashboard REST API
+│   │   ├── kafka_consumer/             # Kafka Data Consumer
+│   │   ├── websocket_service/          # Real-time Updates
+│   │   └── types/                      # Data Types
+│   ├── data/                           # Static Data Files
+│   │   ├── carbon_intensity_global.json
+│   │   ├── dashboard_metrics.json
+│   │   └── regions.json
+│   ├── main.bal                        # Service Entry Point
+│   └── Dockerfile                      # Container Configuration
+│
+├── 📁 sample_carbon_emission_api/      # Mock Carbon Intensity API
+│   ├── routes/                         # API Endpoints
+│   ├── middleware/                     # Request Processing
+│   └── package.json                    # Node.js Dependencies
+│
+├── 📁 images/                          # Documentation Images
+│   ├── Green_proxy_ui.png             # Dashboard Screenshot
+│   ├── WSO2_Green_Proxy_Architecture_Diagram.drawio.png
+│   ├── Request_flow_chart.png         # Request Flow Diagram
+│   └── green_proxy_logic_flow.png     # Logic Flow Diagram
+│
+├── 📄 docker-compose.yml               # Infrastructure Services
+├── 📄 README.md                        # Project Documentation
+└── 📄 .gitignore                       # Git Ignore Rules
 ```
+
+**Key Components:**
+
+- **Frontend**: React-based dashboard with real-time monitoring
+- **Green Proxy**: Core routing logic with carbon-aware decision making
+- **Regional Services**: Deployed instances across different AWS regions
+- **Visualization Service**: Backend for dashboard data and WebSocket updates
+- **Carbon API**: Mock service for carbon intensity data
+- **Infrastructure**: Docker Compose for local development
