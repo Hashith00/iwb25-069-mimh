@@ -1,4 +1,3 @@
-// Dashboard API module for handling Phase 1 API endpoints
 import ballerina/io;
 import ballerina/http;
 import ballerina/regex;
@@ -24,8 +23,6 @@ public function getRegions() returns json|error {
 public function getSystemStatus() returns json|error {
     return check readJsonFile("data/system_status.json");
 }
-
-// ========== PHASE 2 API FUNCTIONS ==========
 
 // Get global carbon intensity data for map visualization
 public function getCarbonIntensityGlobal() returns json|error {
@@ -78,8 +75,6 @@ public function getOptimalRegions(string? clientIp) returns json|error {
     return response;
 }
 
-// Mock function to determine country from IP
-// In a real implementation, this would call a geolocation service
 function getCountryFromIP(string? ip) returns string {
     if ip is () {
         return "default";
@@ -89,7 +84,7 @@ function getCountryFromIP(string? ip) returns string {
     if ip.startsWith("123.231") || ip.startsWith("112.134") {
         return "Sri Lanka";
     } else if ip.startsWith("192.168") || ip.startsWith("10.0") || ip.startsWith("172.16") {
-        return "United States";  // Default for local/private IPs
+        return "United States";
     } else if ip.startsWith("203.94") {
         return "Singapore";
     } else if ip.startsWith("210.196") {
@@ -103,9 +98,7 @@ function getCountryFromIP(string? ip) returns string {
     return "default";
 }
 
-// Helper function to get client IP from HTTP request
 public function getClientIP(http:Request req) returns string {
-    // Try to get IP from X-Forwarded-For header first
     string|http:HeaderNotFoundError xForwardedFor = req.getHeader("X-Forwarded-For");
     if xForwardedFor is string {
         // Take the first IP if there are multiple
@@ -115,12 +108,10 @@ public function getClientIP(http:Request req) returns string {
         }
     }
     
-    // Try X-Real-IP header
     string|http:HeaderNotFoundError xRealIp = req.getHeader("X-Real-IP");
     if xRealIp is string {
         return xRealIp;
     }
     
-    // For demo purposes, return a mock IP if no headers found
-    return "123.231.120.186";  // Sri Lanka IP for demo
+    return "123.231.120.186";
 }

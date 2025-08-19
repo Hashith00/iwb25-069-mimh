@@ -110,7 +110,7 @@ const Dashboard = () => {
             <div className="flex items-center space-x-4">
               <Link to="/" className="flex items-center space-x-2">
                 <Globe className="h-8 w-8 text-primary" />
-                <span className="text-xl font-bold">GreenRoute Dashboard</span>
+                <span className="text-xl font-bold">GreenProxy Dashboard</span>
               </Link>
             </div>
             <div className="flex items-center space-x-4">

@@ -14,35 +14,13 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroNetworkImage from "@/assets/hero-network.jpg";
+import HeaderComponent from "@/components/HeaderComponent";
 
 const Landing = () => {
   return (
     <div className="min-h-screen">
       {/* Navigation */}
-      <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Leaf className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold text-foreground">
-              GreenRoute
-            </span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Link to="/dashboard">
-              <Button variant="ghost">Dashboard</Button>
-            </Link>
-            <Link to="/regions">
-              <Button variant="ghost">Regions</Button>
-            </Link>
-            <Link to="/events">
-              <Button variant="ghost">Events</Button>
-            </Link>
-            <Link to="/dashboard">
-              <Button variant="default">Get Started</Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <HeaderComponent />
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
@@ -199,7 +177,7 @@ const Landing = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-6">
-                Why Choose GreenRoute?
+                Why Choose GreenProxy?
               </h2>
               <p className="text-xl text-muted-foreground">
                 The perfect balance of sustainability, performance, and
@@ -317,10 +295,10 @@ const Landing = () => {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
               <Leaf className="h-6 w-6 text-primary" />
-              <span className="text-lg font-semibold">GreenRoute</span>
+              <span className="text-lg font-semibold">GreenProxy</span>
             </div>
             <div className="text-sm text-muted-foreground">
-              © 2024 GreenRoute. Building a sustainable cloud infrastructure.
+              © 2024 GreenProxy. Building a sustainable cloud infrastructure.
             </div>
           </div>
         </div>

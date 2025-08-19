@@ -31,11 +31,9 @@ jobs:
 
       - name: Create ECR repositories if they don't exist
         run: |
-          # Create green-proxy repository
           aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy --region ${{ env.AWS_REGION }} || \
           aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy --region ${{ env.AWS_REGION }}
 
-          # Create eu-central-1-service repository
           aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service --region ${{ env.AWS_REGION }} || \
           aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service --region ${{ env.AWS_REGION }}
 
