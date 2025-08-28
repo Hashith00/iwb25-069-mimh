@@ -53,7 +53,7 @@ jobs:
 
       - name: Build and push eu-central-1 service
         run: |
-          cd eu_central_1_service
+          cd regional_services/eu_central_1_service
           bal build
           docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }} .
           docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }}
