@@ -289,3 +289,7 @@ green-proxy/
 - **Visualization Service**: Backend for dashboard data and WebSocket updates
 - **Carbon API**: Mock service for carbon intensity data
 - **Infrastructure**: Docker Compose for local development
+
+**Thrid Party API**
+
+- - [Electricity Maps](https://www.electricitymaps.com/) For getting real time carbon intensities

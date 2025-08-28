@@ -33,7 +33,7 @@ dependencies = [
 [[package]]
 org = "ballerina"
 name = "cloud"
-version = "3.3.2"
+version = "3.3.3"
 modules = [
 	{org = "ballerina", packageName = "cloud", moduleName = "cloud"}
 ]
@@ -78,7 +78,7 @@ dependencies = [
 [[package]]
 org = "ballerina"
 name = "http"
-version = "2.14.3"
+version = "2.14.4"
 dependencies = [
 	{org = "ballerina", name = "auth"},
 	{org = "ballerina", name = "cache"},

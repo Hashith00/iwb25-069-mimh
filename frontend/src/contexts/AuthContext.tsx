@@ -59,19 +59,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Simple validation - in real app, this would be an API call
-      if (email === "admin@greenproxy.com" && password === "admin123") {
-        const userData: User = {
-          id: "1",
-          email: email,
-          name: "Admin User",
-        };
-
-        setUser(userData);
-        localStorage.setItem("user", JSON.stringify(userData));
-        return true;
-      } else if (email === "user@greenproxy.com" && password === "user123") {
+      if (email === "user@greenproxy.com" && password === "user123") {
         const userData: User = {
           id: "2",
           email: email,

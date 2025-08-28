@@ -56,7 +56,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ children }) => {
           toast({
             title: "Login Failed",
             description:
-              "Invalid email or password. Try admin@greenproxy.com / admin123 or user@greenproxy.com / user123",
+              "Invalid email or password. Try user@greenproxy.com / user123",
             variant: "destructive",
           });
         }
@@ -176,7 +176,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ children }) => {
             <p>
               <strong>Demo Credentials:</strong>
             </p>
-            <p>Admin: admin@greenproxy.com / admin123</p>
             <p>User: user@greenproxy.com / user123</p>
           </div>
         )}

@@ -28,6 +28,7 @@ import {
   Server,
   Gauge,
 } from "lucide-react";
+import DashboardLayout from "@/components/layouts/DashboardLayout";
 import {
   useWebSocket,
   WebSocketStatus,
@@ -211,7 +212,7 @@ const Events: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <DashboardLayout pageTitle="Events">
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -353,7 +354,7 @@ const Events: React.FC = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

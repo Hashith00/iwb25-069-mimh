@@ -10,6 +10,20 @@
 .env.test
 .env.production
 
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+build/
+target/
+**/target/
+coverage/
+logs/
+*.log
+
+# Specific service ignores
 sample_carbon_emision_api/node_modules
 sample_carbon_emision_api/dist
 sample_carbon_emision_api/build
