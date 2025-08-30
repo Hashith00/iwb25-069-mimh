@@ -1,6 +1,6 @@
 [package]
 org = "dell"
-name = "ap_northeast_1_service"
+name = "ap_south_2_service"
 version = "0.1.0"
 distribution = "2201.12.7"
 

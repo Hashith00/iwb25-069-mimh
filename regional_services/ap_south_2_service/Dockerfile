@@ -8,7 +8,7 @@ WORKDIR /home/ballerina
 COPY target/bin/eu_central_1_service.jar /home/ballerina/
 
 # Expose the port the service runs on
-EXPOSE 3004
+EXPOSE 3005
 
 # Run the Ballerina service
-CMD ["ballerina", "run", "eu_central_1_service.jar"] 
+CMD ["ballerina", "run", "ap_south_2_service.jar"] 

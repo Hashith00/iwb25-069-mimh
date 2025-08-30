@@ -85,7 +85,7 @@ const Landing = () => {
                   </Button>
                 </LoginModal>
               )}
-              <Link to="/regions" className="w-full xs:w-auto">
+              <Link to="/regionsPage" className="w-full xs:w-auto">
                 <Button
                   variant="outline"
                   size="lg"
@@ -479,7 +479,7 @@ const Landing = () => {
                         </Button>
                       </LoginModal>
                     )}
-                    <Link to="/regions" className="w-full xs:w-auto">
+                    <Link to="/regionspage" className="w-full xs:w-auto">
                       <Button
                         variant="outline"
                         size="lg"

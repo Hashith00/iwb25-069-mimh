@@ -3,6 +3,7 @@ import ballerina/http;
 // Define the structure of a region payload
 type Region record {|
         string name;
+        string? zip?; // Make zip optional
 |};
 
 isolated service /us_east_1 on new http:Listener(3001) {
@@ -19,7 +20,7 @@ isolated service /us_east_1 on new http:Listener(3001) {
     resource function get region() returns json|http:InternalServerError {
         do {
             lock {
-                return <json>{ "regions": self.regions.cloneReadOnly() };
+                return <json>{ "region": "Respose from us_east_1 region" };
             }
         } on fail var err {
             return <http:InternalServerError>{

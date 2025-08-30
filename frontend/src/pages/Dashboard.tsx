@@ -21,12 +21,13 @@ import {
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import {
-  api,
   CarbonIntensityLocation,
   DashboardMetrics,
   Region,
   SystemStatus,
-} from "@/services/api";
+} from "@/types/types";
+
+import { api } from "../services/api";
 
 // Fix for Leaflet default markers
 delete (L.Icon.Default.prototype as any)._getIconUrl;

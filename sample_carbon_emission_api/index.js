@@ -7,7 +7,7 @@ import checkApiKeyExists from "./middleware/check-api-key.js";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = 3100;
 
 app.use(cors());
 const corsOptions = {

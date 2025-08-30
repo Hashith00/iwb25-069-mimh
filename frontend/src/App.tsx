@@ -10,6 +10,7 @@ import Events from "./pages/Events";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
+import Regions from "./pages/Regions";
 
 const queryClient = new QueryClient();
 
@@ -30,12 +31,20 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
-            <Route path="/regions" element={<RegionsPage />} />
+            <Route path="/regionsPage" element={<RegionsPage />} />
             <Route
               path="/events"
               element={
                 <ProtectedRoute>
                   <Events />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/regions"
+              element={
+                <ProtectedRoute>
+                  <Regions />
                 </ProtectedRoute>
               }
             />

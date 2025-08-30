@@ -70,7 +70,7 @@ dependencies = [
 [[package]]
 org = "ballerina"
 name = "http"
-version = "2.14.3"
+version = "2.14.4"
 dependencies = [
 	{org = "ballerina", name = "auth"},
 	{org = "ballerina", name = "cache"},
@@ -206,7 +206,7 @@ dependencies = [
 [[package]]
 org = "ballerina"
 name = "log"
-version = "2.12.0"
+version = "2.13.0"
 dependencies = [
 	{org = "ballerina", name = "io"},
 	{org = "ballerina", name = "jballerina.java"},
@@ -306,13 +306,13 @@ modules = [
 
 [[package]]
 org = "dell"
-name = "ap_northeast_1_service"
+name = "ap_south_1_service"
 version = "0.1.0"
 dependencies = [
 	{org = "ballerina", name = "http"},
 	{org = "ballerinai", name = "observe"}
 ]
 modules = [
-	{org = "dell", packageName = "ap_northeast_1_service", moduleName = "ap_northeast_1_service"}
+	{org = "dell", packageName = "ap_south_1_service", moduleName = "ap_south_1_service"}
 ]
 

@@ -1,7 +1,9 @@
 import express from "express";
+import { getRandomCarbonIntensity } from "../utils/carbon-emission-values-generator.js";
 
 const carbonEmisionRoutes = express.Router();
-const carbonIntensityData = {
+// Static carbon intensity data for regions with fixed values
+const staticCarbonIntensityData = {
   // Americas
   "us-east-1": { carbonIntensity: 378 },
   "us-east-2": { carbonIntensity: 399 },
@@ -25,18 +27,42 @@ const carbonIntensityData = {
   "me-south-1": { carbonIntensity: 433 },
   "me-central-1": { carbonIntensity: 395 },
 
-  // Asia-Pacific
+  // Asia-Pacific (fixed values)
   "ap-east-1": { carbonIntensity: 622 },
   "ap-northeast-1": { carbonIntensity: 436 },
   "ap-northeast-2": { carbonIntensity: 416 },
   "ap-northeast-3": { carbonIntensity: 436 },
-  "ap-south-1": { carbonIntensity: 574 },
-  "ap-south-2": { carbonIntensity: 569 },
-  "ap-southeast-1": { carbonIntensity: 393 },
   "ap-southeast-2": { carbonIntensity: 526 },
   "ap-southeast-3": { carbonIntensity: 247 },
   "ap-southeast-4": { carbonIntensity: 524 },
 };
+
+// Regions with dynamic (random) carbon intensity values
+const dynamicCarbonIntensityRegions = {
+  "ap-south-1": { min: 300, max: 600 },
+  "ap-south-2": { min: 300, max: 600 },
+  "ap-southeast-1": { min: 300, max: 600 },
+};
+
+// Function to get carbon intensity for a zone
+function getCarbonIntensityForZone(zone) {
+  if (staticCarbonIntensityData[zone]) {
+    return staticCarbonIntensityData[zone].carbonIntensity;
+  }
+
+  if (dynamicCarbonIntensityRegions[zone]) {
+    const { min, max } = dynamicCarbonIntensityRegions[zone];
+    return getRandomCarbonIntensity(min, max);
+  }
+
+  return null;
+}
+
+// Combined list of all valid zones
+const allValidZones = [
+  ...Object.keys(staticCarbonIntensityData),
+  ...Object.keys(dynamicCarbonIntensityRegions),
+];
 
 carbonEmisionRoutes.get("/", (req, res) => {
   res.json({
@@ -54,11 +80,11 @@ carbonEmisionRoutes.get("/carbon-intensity/latest", (req, res) => {
       .json({ error: "The 'zone' query parameter is required." });
   }
 
-  const regionData = carbonIntensityData[zone];
-  if (regionData) {
+  const carbonIntensity = getCarbonIntensityForZone(zone);
+  if (carbonIntensity !== null) {
     return res.status(200).json({
       zone: zone,
-      carbonIntensity: regionData.carbonIntensity,
+      carbonIntensity: carbonIntensity,
       datetime: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       createdAt: new Date().toISOString(),
@@ -72,7 +98,7 @@ carbonEmisionRoutes.get("/carbon-intensity/latest", (req, res) => {
     return res.status(404).json({
       error: "Data not found for the specified zone.",
       zone: zone,
-      availableZones: Object.keys(carbonIntensityData), // List all valid zones
+      availableZones: allValidZones, // List all valid zones
     });
   }
 });

@@ -5,10 +5,10 @@ FROM ballerina/ballerina:2201.12.7
 WORKDIR /home/ballerina
 
 # Copy the built Ballerina application
-COPY target/bin/eu_central_1_service.jar /home/ballerina/
+COPY target/bin/ap_south_1_service.jar /home/ballerina/
 
 # Expose the port the service runs on
-EXPOSE 3004
+EXPOSE 3006
 
 # Run the Ballerina service
-CMD ["ballerina", "run", "ap_northeast_1_service.jar"] 
+CMD ["ballerina", "run", "ap_south_1_service.jar"] 

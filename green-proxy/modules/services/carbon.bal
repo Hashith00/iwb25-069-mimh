@@ -10,7 +10,7 @@ import green_proxy.kafka;
 
 configurable string carbon_api_key = ?;
 
-final http:Client carbonIntensityClient = check new ("http://localhost:3000/api/v1");
+final http:Client carbonIntensityClient = check new ("http://localhost:3100/api/v1");
 
 // Get carbon intensity for a specific region/zone (with Redis caching)
 public function getCarbonIntensity(string zone) returns types:CarbonIntensityResponse|error {

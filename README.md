@@ -101,7 +101,7 @@ npm install
 npm start
 
 # Verify API is running
-curl http://localhost:3000/health
+curl http://localhost:3100/health
 # Expected output: {"status": "healthy"}
 
 # API available at http://localhost:3000
@@ -192,7 +192,7 @@ redisPassword=""
 
 ```env
 VITE_API_BASE_URL=http://localhost:8080
-VITE_REFRESH_INTERVAL=30000
+VITE_REFRESH_INTERVAL=3000
 ```
 
 ## 🛠️ Project Structure

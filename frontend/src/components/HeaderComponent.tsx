@@ -63,7 +63,7 @@ const HeaderComponent = () => {
                 Dashboard
               </Button>
             </Link>
-            <Link to="/regions">
+            <Link to="/regionsPage">
               <Button
                 variant="ghost"
                 className="font-geist text-white/80 hover:text-white hover:bg-white/10 backdrop-blur rounded-full px-3 lg:px-4 py-2 text-sm transition-all duration-300"
@@ -212,7 +212,7 @@ const HeaderComponent = () => {
                   Dashboard
                 </Button>
               </Link>
-              <Link to="/regions" onClick={closeMobileMenu}>
+              <Link to="/regionsPage" onClick={closeMobileMenu}>
                 <Button
                   variant="ghost"
                   className="w-full justify-start font-geist text-white/80 hover:text-white hover:bg-white/10 backdrop-blur rounded-lg px-4 py-3 text-sm transition-all duration-300"

@@ -1,29 +1,25 @@
 import ballerina/http;
 
 // Define the structure of a region payload
-    type Region record {|
+type Region record {|
         string name;
-    |};
+        string? zip?;
+|};
 
-
-
-
-isolated service /ap_northeast_1 on new http:Listener(3006) {
-
-    private string[] regions = ["ap-northeast-1", "ap-northeast-2", "ap-northeast-3"];
+isolated service / on new http:Listener(3005) {
+    private string[] regions = ["ap-southeast-1", "ap-southeast-2", "ap-southeast-3"];
 
     resource function get health() returns json {
         return {
             "status": "UP",
-            "url": "http://localhost:3006"
+            "url": "http://localhost:3005"
         };
     }
-
     // GET all regions with do/on fail error handling
     resource function get region() returns json|http:InternalServerError {
         do {
             lock {
-                return <json>{ "regions": self.regions.cloneReadOnly() };
+                return <json>{ "regions": "Respose from ap_south_2 service" };
             }
         } on fail var err {
             return <http:InternalServerError>{
