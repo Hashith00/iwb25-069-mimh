@@ -53,14 +53,14 @@ jobs:
 
       - name: Build and push eu-central-1 service
         run: |
-          cd regional_services/eu_central_1_service
+          cd regional_services/ap_south_1_service
           bal build
-          docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }} .
-          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }}
-          docker tag ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:latest
-          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:latest
+          docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/ap_south_1_service:${{ github.sha }} .
+          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/ap_south_1_service:${{ github.sha }}
+          docker tag ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/ap_south_1_service:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/ap_south_1_service:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/ap_south_1_service:latest
 
       - name: Output image URIs
         run: |
           echo "Green Proxy Image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:${{ github.sha }}"
-          echo "EU Central 1 Service Image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }}"
+          echo "EU South-1 Service Image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }}"
