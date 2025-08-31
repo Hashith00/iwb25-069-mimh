@@ -34,8 +34,8 @@ jobs:
           aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy --region ${{ env.AWS_REGION }} || \
           aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy --region ${{ env.AWS_REGION }}
 
-          aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service --region ${{ env.AWS_REGION }} || \
-          aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service --region ${{ env.AWS_REGION }}
+          aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY_PREFIX }}/ap_south_1_service --region ${{ env.AWS_REGION }} || \
+          aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY_PREFIX }}/ap_south_1_service --region ${{ env.AWS_REGION }}
 
       - name: Set up Ballerina
         uses: ballerina-platform/setup-ballerina@v1
@@ -51,7 +51,7 @@ jobs:
           docker tag ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:latest
 
-      - name: Build and push eu-central-1 service
+      - name: Build and push ap-south-1 service
         run: |
           cd regional_services/ap_south_1_service
           bal build
@@ -63,4 +63,4 @@ jobs:
       - name: Output image URIs
         run: |
           echo "Green Proxy Image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/green-proxy:${{ github.sha }}"
-          echo "EU South-1 Service Image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/eu-central-1-service:${{ github.sha }}"
+          echo "AP South-1 Service Image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_PREFIX }}/ap_south_1_service:${{ github.sha }}"
